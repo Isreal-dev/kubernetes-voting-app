@@ -1,8 +1,11 @@
 from flask import Flask, request, render_template_string
+import redis
+import os
 
 app = Flask(__name__)
 
-votes = {"Cats": 0, "Dogs": 0}
+redis_host = os.getenv("REDIS_HOST", "localhost")
+r = redis.Redis(host=redis_host, port=6379)
 
 HTML = """
 <!DOCTYPE html>
@@ -27,8 +30,16 @@ HTML = """
 def vote():
     if request.method == "POST":
         choice = request.form["vote"]
-        votes[choice] += 1
-    return render_template_string(HTML, cats=votes["Cats"], dogs=votes["Dogs"])
+        r.incr(choice)
+
+    cats = r.get("Cats") or 0
+    dogs = r.get("Dogs") or 0
+
+    return render_template_string(
+        HTML,
+        cats=int(cats),
+        dogs=int(dogs)
+    )
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=80)
