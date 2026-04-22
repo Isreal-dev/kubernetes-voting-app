@@ -3,17 +3,22 @@
 A microservices-based voting application deployed using Docker and Kubernetes.
 
 ## Tech Stack
-- Docker
-- Kubernetes
+- Python (Flask)
 - Redis
 - PostgreSQL
-- Node.js / Python
+- Docker
+- Kubernetes
 
 ## Features
-- Containerized services
-- Kubernetes deployments and services
-- Ingress for external access
-- CI/CD pipeline (GitHub Actions)
+- Vote between Cats and Dogs
+- Real-time result processing
+- Multi-container architecture
 
-## Project Status
-In progress – building and deploying services step by step.
+## Run with Docker Compose
+docker-compose up --build
+
+## Run with Kubernetes
+kubectl apply -f k8s/
+
+## Access App
+kubectl port-forward service/vote-service 5000:80

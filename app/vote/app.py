@@ -1,11 +1,22 @@
 from flask import Flask, request, render_template_string
 import redis
 import os
+import time
 
 app = Flask(__name__)
 
-redis_host = os.getenv("REDIS_HOST", "localhost")
-r = redis.Redis(host=redis_host, port=6379)
+redis_host = os.getenv("REDIS_HOST", "redis")
+
+# 🔁 Retry connection to Redis
+for i in range(10):
+    try:
+        r = redis.Redis(host=redis_host, port=6379)
+        r.ping()
+        print("Connected to Redis!")
+        break
+    except redis.exceptions.ConnectionError:
+        print("Waiting for Redis...")
+        time.sleep(2)
 
 HTML = """
 <!DOCTYPE html>

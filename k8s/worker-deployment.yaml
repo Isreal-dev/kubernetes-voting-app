@@ -1,23 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: result
+  name: worker
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: result
+      app: worker
   template:
     metadata:
       labels:
-        app: result
+        app: worker
     spec:
       containers:
-      - name: result
-        image: your-docker-username/result:latest
+      - name: worker
+        image: your-docker-username/worker:latest
         imagePullPolicy: Never
-        ports:
-        - containerPort: 80
         resources:
           requests:
             memory: "64Mi"
@@ -25,18 +23,17 @@ spec:
           limits:
             memory: "128Mi"
             cpu: "500m"
+        # We use an 'exec' probe because the worker has no web server
         livenessProbe:
-          httpGet:
-            path: /
-            port: 80
-          initialDelaySeconds: 5
-          periodSeconds: 10
-        readinessProbe:
-          httpGet:
-            path: /
-            port: 80
-          initialDelaySeconds: 5
-          periodSeconds: 10
+          exec:
+            command:
+            - /bin/sh
+            - -c
+            - ps aux | grep python
+          initialDelaySeconds: 20
+          periodSeconds: 20
         env:
+        - name: REDIS_HOST
+          value: "redis"
         - name: DB_HOST
           value: "db"
