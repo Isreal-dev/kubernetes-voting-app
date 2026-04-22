@@ -14,8 +14,8 @@ spec:
     spec:
       containers:
       - name: result
-        image: your-docker-username/result:latest
-        imagePullPolicy: Never
+        image: isrealdev/result:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 80
         resources:

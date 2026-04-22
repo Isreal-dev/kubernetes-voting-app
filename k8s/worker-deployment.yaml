@@ -14,8 +14,8 @@ spec:
     spec:
       containers:
       - name: worker
-        image: your-docker-username/worker:latest
-        imagePullPolicy: Never
+        image: isrealdev/worker:latest
+        imagePullPolicy: Always
         resources:
           requests:
             memory: "64Mi"

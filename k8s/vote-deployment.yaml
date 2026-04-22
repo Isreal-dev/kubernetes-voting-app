@@ -14,8 +14,8 @@ spec:
     spec:
       containers:
       - name: vote
-        image: your-docker-username/vote:latest
-        imagePullPolicy: Never
+        image: isrealdev/vote:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 80
         resources:

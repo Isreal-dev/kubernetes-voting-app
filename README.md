@@ -1,24 +1,24 @@
 # Kubernetes Voting App
 
-A production-style microservices voting application built with Docker and Kubernetes.
+A production-style microservices voting application orchestrated with Kubernetes and automated via GitHub Actions.
 
-## Architecture
-
-- Vote Service (Flask)
+## 🏗️ Architecture
+The application consists of five microservices communicating in real-time:
+- Vote Service: Python (Flask) frontend for user voting.
 - Result Service
 - Worker Service
-- Redis (message queue)
-- PostgreSQL (database)
+- Redis: In-memory message queue.
+- PostgreSQL: Persistent database storage.
 
-## Tech Stack
+## CI/CD Pipeline
+This project features a fully automated CI/CD workflow:
+- GitHub Actions: Automatically builds and pushes Docker images to Docker Hub on every push to the `main` branch.
+- Docker Hub: Hosts the custom images under the `isrealdev` namespace.
 
-- Python (Flask)
-- Docker
-- Kubernetes
-- Redis
-- PostgreSQL
+## Kubernetes Deployment
+To deploy this application to a cluster (like Minikube):
 
-## Run Locally (Docker Compose)
-
-```bash
-docker-compose up --build
+1. Clone the repo and navigate to the `k8s` directory.
+2. Apply the manifests:
+   ```bash
+   kubectl apply -f k8s/
