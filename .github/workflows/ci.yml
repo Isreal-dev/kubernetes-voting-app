@@ -8,6 +8,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      # This builds all three in parallel!
+      matrix:
+        service: [vote, result, worker]
 
     steps:
     - name: Checkout code
@@ -16,17 +20,8 @@ jobs:
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
 
-    - name: Build Vote Image
+    - name: Build ${{ matrix.service }} Image
       run: |
-        docker build -t vote-app -f docker/vote.Dockerfile .
-
-    - name: Build Result Image
-      run: |
-        docker build -t result-app -f docker/result.Dockerfile .
-
-    - name: Build Worker Image
-      run: |
-        docker build -t worker-app -f docker/worker.Dockerfile .
-
-    - name: Verify images
-      run: docker images
+        # IMPORTANT: Ensure your folder is actually named 'docker' 
+        # and files are named 'vote.Dockerfile', etc.
+        docker build -t ${{ matrix.service }}-app -f docker/${{ matrix.service }}.Dockerfile .
