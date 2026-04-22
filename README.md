@@ -1,24 +1,24 @@
 # Kubernetes Voting App
 
-A microservices-based voting application deployed using Docker and Kubernetes.
+A production-style microservices voting application built with Docker and Kubernetes.
+
+## Architecture
+
+- Vote Service (Flask)
+- Result Service
+- Worker Service
+- Redis (message queue)
+- PostgreSQL (database)
 
 ## Tech Stack
+
 - Python (Flask)
-- Redis
-- PostgreSQL
 - Docker
 - Kubernetes
+- Redis
+- PostgreSQL
 
-## Features
-- Vote between Cats and Dogs
-- Real-time result processing
-- Multi-container architecture
+## Run Locally (Docker Compose)
 
-## Run with Docker Compose
+```bash
 docker-compose up --build
-
-## Run with Kubernetes
-kubectl apply -f k8s/
-
-## Access App
-kubectl port-forward service/vote-service 5000:80
